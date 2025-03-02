@@ -1,15 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { StudService } from './students.service';
+import { BodyDto, IdDto } from './dto/students.dto';
 
 
 interface iStud {
   id: number,
-  name: string,
-  age: number,
-  grade: string
-}
-
-interface iBody {
   name: string,
   age: number,
   grade: string
@@ -28,7 +23,7 @@ export class StudController {
     }
   }
   @Post()
-  createItem(@Body() obj: iBody): iStud[] | string {
+  createItem(@Body() obj: BodyDto): iStud[] | string {
     try {
       return this.appService.createItem(obj);
     } catch (error) {
@@ -36,15 +31,15 @@ export class StudController {
     }
   }
   @Put('/:id')
-  updateItem(@Body() obj: iBody, @Param('id') id:string): iStud[] | string {
+  updateItem(@Body() obj: BodyDto, @Param('id') id: IdDto): iStud[] | string {
     try {
-      return this.appService.updateItem(obj,id);
+      return this.appService.updateItem(obj, id);
     } catch (error) {
       return error.message
     }
   }
   @Delete('/:id')
-  deleteItem(@Param('id') id:string): iStud[] | string {
+  deleteItem(@Param('id') id: IdDto): iStud[] | string {
     try {
       return this.appService.deleteItem(id);
     } catch (error) {
